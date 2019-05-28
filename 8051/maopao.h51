@@ -1,0 +1,28 @@
+;冒泡排序算法
+ORG         2000H
+DATA: DB    85,38,15,35,77,99,19,55,25
+
+
+ORG 3000H
+SORT:
+    MOV     DPTR,#DATA
+    MOV     R0,DPL
+    MOV     R7,#08H
+    CLR     TR0
+LOOP:
+     MOVC   A,@DPTR+R0
+     MOV    2BH,A
+     INC    R0
+     MOV    2AH,@DPTR+R0
+     CLR    C
+     SUBB   A,@DPTR+R0
+     JC     NEXT
+     MOVC   @DPTR+R0,2BH
+     DEC    R0
+     MOVC   @DPTR+R0,2AH
+     INC    R0
+     SETB   TR0
+NEXT:
+    DJNZ    R7,LOOP
+    JB      TR0,SORT
+HERE: SJMP  HERE
