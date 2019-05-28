@@ -1,2 +1,49 @@
 ;插入排序算法
-sort:
+ORG         2000H
+DATA: DB    85,38,15,35,77,99,19,55,25
+
+
+ORG 3000H
+SORT:
+    LOOP1:
+        MOV     DPTR,#DATA;
+        MOV     R2,#8;      //输入数据个数
+        MOV     R0,#1;      //排序位置 循环控制量
+        MOV     A,R0;
+        MOVC    A,@DPTR+A;
+        MOV     R1,A;       //R1作temp存储
+        MOV     A,R0;
+        MOV     R3,A;       //已完成序列排序倒序
+        MOV     R7,A;
+        DEC     R3;
+        MOV     R6,DPL;     //存储程序指针低位
+        LOOP2:
+            MOV     A,R3;     
+            MOVC    A,@DPTR+A;
+            MOV     R4,A;
+            SUBB    R4,R1;
+            JC      BREAK;
+            MOV     A,R3;
+            MOVC    A,@A+DPTR
+            MOV     R5,A;
+            CLR     A;
+            ADD     A,R3;
+            ADD     A,DPL;
+            ADD     A,#1;
+            MOV     DPL,A;
+            MOV     A,R5;
+            MOVX    @DPTR,A;
+            MOV     DPL,R6;
+            DJNZ    R7,LOOP2;
+    BREAK:
+        CLR     A;
+        ADD     A,R3;
+        ADD     A,#1;
+        ADD     A,DPL;
+        MOV     DPL,A;
+        MOV     A,R1;
+        MOVX    @DPTR,A;
+        MOV     DPL,R6;
+        INC     R0;
+        DJNZ    R2,LOOP1;
+HERE:   SJMP    HERE
