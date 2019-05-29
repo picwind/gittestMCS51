@@ -15,7 +15,7 @@ DUQU:
 
 ORG 3000H
 SORT:
-    MOV     DPTR,#DATA
+    MOV     DPTR,#30H
     MOV     R0,DPL
     MOV     R7,#08H
     CLR     TR0
