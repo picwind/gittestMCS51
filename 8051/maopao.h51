@@ -15,21 +15,20 @@ DUQU:
 
 ORG 3000H
 SORT:
-    MOV     DPTR,#30H
-    MOV     R0,DPL
+    MOV     R0,#30H
     MOV     R7,#08H
     CLR     TR0
 LOOP:
-     MOVC   A,@DPTR+R0
+     MOVB   A,@R0
      MOV    2BH,A
      INC    R0
-     MOV    2AH,@DPTR+R0
+     MOV    2AH,@R0
      CLR    C
-     SUBB   A,@DPTR+R0
+     SUBB   A,@R0
      JC     NEXT
-     MOVC   @DPTR+R0,2BH
+     MOV    @R0,2BH
      DEC    R0
-     MOVC   @DPTR+R0,2AH
+     MOVB   @R0,2AH
      INC    R0
      SETB   TR0
 NEXT:
