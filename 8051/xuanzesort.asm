@@ -10,13 +10,13 @@ DUQU:
     MOV     @R1,A;
     INC     R0;
     INC     R1;
-    DJNZ    R2,DUQU;
+    DJNZ    R2,DUQU;        //读取数据
 
 
 ORG 3000H
 SORT:
     LOOP1:
-        MOV     R2,#0;      //第一个循环的控制量
+        MOV     R2,#0;      //第一个循环的控制量，位置
         MOV     R3,#0;      //temp
         MOV     A,R2;
         MOV     R1,A;       //index
@@ -60,5 +60,5 @@ SORT:
         MOV     A,R3;
         MOV     @R0,A;
         INC     R2;
-        CJNE    R2,#8,LOOP1;
-HERE:   SJMP    HERE
+        CJNE    R2,#8,LOOP1;//
+HERE:   SJMP    HERE;       //排序结束

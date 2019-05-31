@@ -30,24 +30,24 @@ SORT:
         LOOP2:
             MOV     A,R7;
             MOV     R0,A;
-            MOV     A,@R0;
-            CLR     C;
-            SUBB    A,R5;
-            JC      BREAK;
+            MOV     A,@R0;  //前面排好序的数从后往前读取
+            CLR     C;      //进位标志位清零
+            SUBB    A,R5;   //读取排好序的数减去要插入的数
+            JC      BREAK;  //要插入的数小于排好序的数，将排好序的数往后移一位，否则跳出循环
             MOV     A,@R0;
             MOV     R6,A;
             MOV     A,R7;
             ADD     A,#1;
             MOV     R0,A;
             MOV     A,R6;
-            MOV     @R0,A;
-            DEC     R7;
+            MOV     @R0,A;  //将排好序的数往后移一位
+            DEC     R7;     //进行下一循环
             CJNE    R7,#29H,LOOP2;
     BREAK:      
         MOV     A,R7;
         ADD     A,#1;
         MOV     A,R5;
         MOV    @R1,A;
-        INC     R4;
+        INC     R4;         //进行下一循环
         DJNZ    R2,LOOP1;
-HERE:   SJMP    HERE
+HERE:   SJMP    HERE;       //排序结束
