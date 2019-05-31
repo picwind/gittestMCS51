@@ -28,7 +28,7 @@ LOOP:
      JC     NEXT
      MOV    @R0,2BH
      DEC    R0
-     MOVB   @R0,2AH
+     MOV   @R0,2AH
      INC    R0
      SETB   TR0
 NEXT:
