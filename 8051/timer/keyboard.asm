@@ -25,18 +25,18 @@ Start:
       MOV 	R0,#0F0H    ;初始化R0
       MOV 	R1,#0FH     ;初始化R1
 LOOP1:
-      MOV 	P2,R0       ;行为高电平，列为低电平
+      MOV 	P2,R0       ;输出行为高电平，列为低电平
       MOV	A,P2        ;从P2口读取数
-      ANL	A,#0F0H     ;与00001111相与，看是否有键按下
+      ANL	A,#0F0H     ;与11110000相与，看是否有键按下
       JNB	Acc.4,PK
       JNB	Acc.5,PK
       JNB	Acc.6,PK
-      JNB	Acc.7,PK    ;第几行的键被按下
+      JNB	Acc.7,PK    ;有键被按下
 PK:
       ACALL	DL10        ;延迟10ms去抖动
-      MOV 	P2,R0       ;
-      MOV	A,P2;
-      ANL	A,#0F0H;
+      MOV 	P2,R0       ;输出行为高电平，列为低电平
+      MOV	A,P2        ;从P2口读取数
+      ANL	A,#0F0H     ;与11110000相与，看是第几行键被按下
       JNB	Acc.4,L1
       JNB	Acc.5,L2
       JNB	Acc.6,L3
@@ -45,13 +45,13 @@ PK:
 LOOP2:  
       SUBB	A,#0F0H
       JZ	LOOP1
-      MOV	P2,R1
-      MOV	A,P2
-      ANL	A,#0FH
+      MOV	P2,R1       ;行为低电平，列为高电平
+      MOV	A,P2        ;从P2口读数
+      ANL	A,#0FH      ;与00001111相与，看列线中是否有低电平
       JNB	Acc.0,C1
       JNB	Acc.1,C2
       JNB	Acc.2,C3
-      JNB	Acc.3,C4        ;看第几列被按下
+      JNB	Acc.3,C4    ;看第几列被按下
 LOOP3:
       MOV	A,R2;
       DEC	A
@@ -87,7 +87,7 @@ C3:
 C4:
       MOV	R3,#4;
       LJMP	LOOP3       ;记录列值
-DL10:               ;延迟10ms子程序
+DL10:               ;延迟10ms去抖动子程序
       MOV	R7,#14H ;循环20次
 DL:      
       MOV	R6,#0FAH;循环250次
