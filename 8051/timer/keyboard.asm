@@ -40,7 +40,7 @@ PK:
       JNB	Acc.4,L1
       JNB	Acc.5,L2
       JNB	Acc.6,L3
-      JNB	Acc.7,L4     ;看是第几行按键被按下
+      JNB	Acc.7,L4    ;看是第几行按键被按下
       LJMP	LOOP1
 LOOP2:  
       SUBB	A,#0F0H
@@ -87,15 +87,15 @@ C3:
 C4:
       MOV	R3,#4;
       LJMP	LOOP3       ;记录列值
-DL10:               ;延迟10ms去抖动子程序
-      MOV	R7,#14H ;循环20次
+DL10:                   ;延迟10ms去抖动子程序
+      MOV	R7,#14H     ;循环20次
 DL:      
-      MOV	R6,#0FAH;循环250次
+      MOV	R6,#0FAH    ;循环250次
 DL6:
       DJNZ	R6,DL6
-      DJNZ	R7,DL   ;共循环5000次，10000个机器周期，大约10ms
+      DJNZ	R7,DL       ;共循环5000次，10000个机器周期，大约10ms
       RET
 TAB:  DB  0C0H,0F9H,0A4H,0B0H,99H,92H,82H,0F8H,80H,90H,88H,83H,0C6H,0A1H,86H,8EH
-;共阳极七段LED的从0 - F的段码
+                        ;共阳极七段LED的从0 - F的段码
 ;====================================================================
       END
